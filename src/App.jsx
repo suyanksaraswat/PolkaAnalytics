@@ -23,6 +23,7 @@ import { Helmet } from "react-helmet";
 import { useDebounce } from "use-debounce";
 import ValidatorTable from "./components/ValidatorTable";
 import HelpCenter from "./components/HelpCenter";
+import WestendApp from "./components/WestendApp";
 import amplitude from "amplitude-js";
 import { AmplitudeProvider, LogOnChange } from "@amplitude/react-amplitude";
 import ScrollToTop from "./ScrollToTop";
@@ -267,6 +268,9 @@ function App() {
 						)}
 					</Route>
 
+					<Route path="/westend-app">
+						<WestendApp />
+					</Route>
 					{/* Help Center */}
 					<Route path="/help-center">
 						<HelpCenter />
