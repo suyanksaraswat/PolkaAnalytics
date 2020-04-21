@@ -13,9 +13,16 @@ import {
     Link as ChakraLink
 } from "@chakra-ui/core";
 import Helmet from "react-helmet";
+import { ApiPromise, WsProvider } from '@polkadot/api';
 
 export default function WestendApp() {
-    return (
+	React.useEffect(async () => {
+		
+		const wsProvider = new WsProvider('wss://westend-rpc.polkadot.io');
+		const api = await ApiPromise.create({ provider: wsProvider });
+
+	}, []);
+	return (
 			<React.Fragment>
 				{/* Westend App Home */}
 				<Helmet>
