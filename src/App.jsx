@@ -19,12 +19,14 @@ import {
     Link,
     CircularProgress,
     useDisclosure,
+    Button,
 } from '@chakra-ui/core'
 import AlertDialogContainer from './components/LoginFlow/AlertDialogContainer'
 import { Helmet } from 'react-helmet'
 import { useDebounce } from 'use-debounce'
 import ValidatorTable from './components/ValidatorTable'
 import HelpCenter from './components/HelpCenter'
+import ReturnsCalculator from './components/ReturnsCalculator'
 import amplitude from 'amplitude-js'
 import { AmplitudeProvider, LogOnChange } from '@amplitude/react-amplitude'
 import ScrollToTop from './ScrollToTop'
@@ -190,7 +192,32 @@ function App() {
                     pb={8}
                     px={{ base: 4, md: 0 }}
                 >
-                    Start Investing
+                    {/* Homepage - Dashboard */}
+                    <Route exact path="/(|dashboard)">
+                        <React.Fragment>
+                            <Link
+                                as={RouterLink}
+                                to="/returns-calculator"
+                                color="teal.500"
+                            >
+                                <Button
+                                    style={{
+                                        border: '1px solid teal.500',
+                                        borderRadius: '18px',
+                                        opacity: 1,
+                                        color: 'teal.500',
+                                        height: '35px',
+                                    }}
+                                >
+                                    Calculate Returns
+                                </Button>
+                            </Link>
+                        </React.Fragment>
+                    </Route>
+
+                    <Route path="/returns-calculator">
+                        <ReturnsCalculator />
+                    </Route>
                     {/* Help Center */}
                     <Route path="/help-center">
                         <HelpCenter />

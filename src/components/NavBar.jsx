@@ -190,6 +190,15 @@ export default ({ onExtensionDialogOpen, onCreateAccountDialogOpen }) => {
                             <Link
                                 as={NavLink}
                                 className="nav-link"
+                                to="/returns-calculator"
+                            >
+                                Returns Calculator
+                            </Link>
+                        </Box>
+                        <Box mr={8}>
+                            <Link
+                                as={NavLink}
+                                className="nav-link"
                                 to="/help-center"
                             >
                                 Help Center
