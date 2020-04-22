@@ -41,117 +41,19 @@ const AMPLITUDE_KEY = '1f1699160a46dec6cc7514c14cb5c968'
 
 function App() {
     const { colorMode, toggleColorMode } = useColorMode()
-    const [electedInfo, setElectedInfo] = React.useState({})
-    const [validatorData, setValidatorData] = React.useState([])
     const [errorState, setErrorState] = React.useState(false)
-    const [validatorTableData, setValidatorTableData] = React.useState([])
-    const [intentionData, setIntentionData] = React.useState([])
-    const [
-        validatorsAndIntentions,
-        setValidatorsAndIntentions,
-    ] = React.useState([])
-    const [maxDailyEarning, setMaxDailyEarning] = React.useState(0)
-    const [stakeInput, setStakeInput] = React.useState(1000.0)
-    const [stakeAmount] = useDebounce(stakeInput, 500.0)
-    const [apiConnected, setApiConnected] = React.useState(false)
-    const [isLoaded, setIsLoaded] = React.useState(false)
+
     const {
         isOpen: isExtensionDialogOpen,
         onOpen: onExtensionDialogOpen,
         onClose: onExtensionDialogClose,
     } = useDisclosure()
+
     const {
         isOpen: isCreateAccountDialogOpen,
         onOpen: onCreateAccountDialogOpen,
         onClose: onCreateAccountDialogClose,
     } = useDisclosure()
-    const ERA_PER_DAY = 4
-    const calcReward = React.useCallback(() => {
-        const data = validatorData.map(validator => {
-            const {
-                stashId,
-                stashIdTruncated,
-                name,
-                commission,
-                totalStake,
-                poolReward,
-                noOfNominators,
-            } = validator
-            const userStakeFraction = stakeAmount / (stakeAmount + totalStake)
-            const dailyEarning = userStakeFraction * poolReward * ERA_PER_DAY
-            return {
-                noOfNominators: noOfNominators,
-                stashId: stashId,
-                stashIdTruncated: stashIdTruncated,
-                name: name,
-                commission: `${parseFloat(commission)}%`,
-                dailyEarning: isNaN(dailyEarning)
-                    ? 'Not enough data'
-                    : `${dailyEarning.toPrecision(10)} KSM`,
-                dailyEarningPrecise: isNaN(dailyEarning) ? 0 : dailyEarning,
-            }
-        })
-        const earnings = data.map(data => data.dailyEarningPrecise)
-        setMaxDailyEarning(Math.max(...earnings))
-        console.log('table data', data)
-        setValidatorTableData(data)
-        if (apiConnected) setIsLoaded(true)
-    }, [stakeAmount, validatorData, apiConnected])
-
-    React.useEffect(() => {
-        if (apiConnected) calcReward()
-    }, [calcReward, apiConnected])
-
-    React.useEffect(() => {
-        const socket = socketIOClient(
-            'https://polka-analytic-api.herokuapp.com/'
-        )
-        socket.on(
-            'initial',
-            ({ filteredValidatorsList, electedInfo, intentionsData }) => {
-                if (intentionsData[0]) {
-                    setApiConnected(true)
-                    setValidatorData(filteredValidatorsList)
-                    setElectedInfo(electedInfo[0])
-                    setIntentionData(intentionsData[0].intentions)
-                    setValidatorsAndIntentions(
-                        intentionsData[0].validatorsAndIntentions
-                    )
-                    setValidatorsAndIntentions(
-                        intentionsData[0].validatorsAndIntentions
-                    )
-                    setValidatorsAndIntentions(
-                        intentionsData[0].validatorsAndIntentions
-                    )
-                } else {
-                    setErrorState(true)
-                }
-            }
-        )
-
-        socket.on(
-            'onDataChange',
-            ({ filteredValidatorsList, electedInfo, intentionsData }) => {
-                if (intentionsData[0]) {
-                    setApiConnected(true)
-                    setValidatorData(filteredValidatorsList)
-                    setElectedInfo(electedInfo[0])
-                    setIntentionData(intentionsData[0].intentions)
-                    setValidatorsAndIntentions(
-                        intentionsData[0].validatorsAndIntentions
-                    )
-                    setValidatorsAndIntentions(
-                        intentionsData[0].validatorsAndIntentions
-                    )
-                    setValidatorsAndIntentions(
-                        intentionsData[0].validatorsAndIntentions
-                    )
-                } else {
-                    setErrorState(true)
-                }
-            }
-        )
-    }, [])
 
     if (errorState) {
         return <ErrorMessage />
@@ -170,10 +72,6 @@ function App() {
                 />
             </Helmet>
             <LogEvent eventType="Home dashboard view" />
-            <LogOnChange
-                eventType={`Expected daily earning from stake (Input Change) : (dashboard view)`}
-                value={stakeInput}
-            />
             <Router>
                 <ScrollToTop />
                 <Route exact path="/">
