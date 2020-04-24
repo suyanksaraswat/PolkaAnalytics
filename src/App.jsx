@@ -47,11 +47,14 @@ function App() {
 	);
 	const [maxDailyEarning, setMaxDailyEarning] = React.useState(0);
 	const [stakeInput, setStakeInput] = React.useState(1000.0);
-	const [stakeAmount] = useDebounce(stakeInput, 500.0);
+	const [stakeAmount] = useDebounce(stakeInput/16, 500.0);
 	const [apiConnected, setApiConnected] = React.useState(false);
 	const [isLoaded, setIsLoaded] = React.useState(false);
 	const ERA_PER_DAY = 4;
 	const calcReward = React.useCallback(() => {
+
+		console.log("stake amount- ", stakeAmount);
+
 		const data = validatorData.map(validator => {
 			const {
 				stashId,
@@ -78,6 +81,16 @@ function App() {
 		});
 		const earnings = data.map(data => data.dailyEarningPrecise);
 		setMaxDailyEarning(Math.max(...earnings));
+		console.log("length of validators- ", Object.keys(data).length)
+		var topVal = {};
+		let i = 0;
+		for (i=0; i<16; i++)
+		{
+			topVal[i] = data[i];
+		}
+		console.log("top 16 val - ", topVal);
+		
+
 		console.log("table data", data);
 		setValidatorTableData(data);
 		if (apiConnected) setIsLoaded(true);
