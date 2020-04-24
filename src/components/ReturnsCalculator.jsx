@@ -103,7 +103,9 @@ export default function ReturnsCalculator() {
                                     roundedLeft="2rem"
                                     roundedRight="2rem"
                                     onChange={e => {
-                                        monthlyInc(parseFloat(e.target.value))
+                                        setMonthlyInc(
+                                            parseFloat(e.target.value)
+                                        )
                                     }}
                                 />
                             </InputGroup>
@@ -132,7 +134,9 @@ export default function ReturnsCalculator() {
                                     roundedLeft="2rem"
                                     roundedRight="2rem"
                                     onChange={e => {
-                                        timePeriod(parseFloat(e.target.value))
+                                        setTimePeriod(
+                                            parseFloat(e.target.value)
+                                        )
                                     }}
                                 />
                             </InputGroup>
