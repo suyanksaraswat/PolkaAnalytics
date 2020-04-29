@@ -157,11 +157,13 @@ export default function ReturnsCalculator() {
                             rounded="4mm"
                             overflow="hidden"
                         >
-                            <Box p="6">
-                                <Heading marginBottom="15%">
-                                    Expected results
-                                </Heading>
-                            </Box>
+							<Box p="6" style={{background:'rgb(238,8,123)', color:'white'}}>
+								<div style={{marginBottom:'100%'}}>
+									<Heading>
+										Expected results
+									</Heading>
+								</div>
+							</Box>
                         </Box>
                     </SimpleGrid>
                 </Box>
